@@ -8,7 +8,8 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
+        <nav class="navbar fixed-top navbar-light bg-light navbar-expand-lg"></nav>
+        <h2 class="navbar-brand">Auctions<i class="fas fa-shopping-bag pl-2"></i></h2>
         <div>
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
@@ -22,10 +23,10 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'create' %}">Watchlist</a>
+                <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'create' %}">Categories</a>
+                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
