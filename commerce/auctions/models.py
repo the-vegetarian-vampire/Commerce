@@ -13,11 +13,11 @@ class Category(models.Model):
 
 class Auction_Listing(models.Model):
     title = models.CharField(max_length=64)
-    description = models.CharField(max_length=164)
-    imageURL = models.CharField(max_length=64)
+    description = models.CharField(max_length=280)
     price = models.FloatField()
+    imageURL = models.CharField(max_length=64)
     active = models.BooleanField(default=True)
-    ower = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null = True, related_name="user")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null = True, related_name="user")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
 
     def __str__(self) -> str:
