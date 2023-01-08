@@ -4,11 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Auction_Listing
+from .models import User, Category, Listing
 
 
 def index(request):
-    listings = Auction_Listing.objects.filter(active=True)
+    listings = Listing.objects.filter(active=True)
     categories = Category.objects.all()
     return render(request, "auctions/index.html", {
         "listings": listings,
@@ -83,7 +83,7 @@ def create_new(request):
 
         data = Category.objects.get(categoryName=category)
 
-        new_listing = Auction_Listing(
+        new_listing = Listing(
             title=title,
             description=description,
             price=float(price),
@@ -98,7 +98,7 @@ def all_categories(request):
     if request.method == "POST":
         categoryform = request.POST['category']
         category = Category.objects.get(categoryName=categoryform)
-        listings = Auction_Listing.objects.filter(active=True, category=category)
+        listings = Listing.objects.filter(active=True, category=category)
         categories = Category.objects.all()
         return render(request, "auctions/index.html", {
             "listings": listings,
@@ -106,10 +106,42 @@ def all_categories(request):
         })
 
 def listing(request, id):
-    return render(request, "auctions/listing.html")
+    data = Listing.objects.get(pk=id)
+    listing_in_watchlist = request.user in data.watchlist.all()
+    return render(request, "auctions/listing.html", {
+        "listing": data,
+        "listing_in_watchlist": listing_in_watchlist,
+    })
 
 def watchlist(request):
-    pass
+    if request.method == "GET":
+        categories = Category.objects.all()
+        return render(request, "auctions/watchlist.html", {
+            "categories": categories
+            })
+
+def removeWatchlist(request, id):
+    data = Listing.objects.get(pk=id)
+    user = request.user
+    data.watchlist.remove(user)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+def addWatchlist(request, id):
+    data = Listing.objects.get(pk=id)
+    user = request.user
+    data.watchlist.add(user)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+def display_watchlist(request):
+    c_user = request.user
+    listings = c_user.list_watchlist.all() 
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings,
+    })
 
 def categories(request):
-    pass
+    if request.method == "GET":
+        categories = Category.objects.all()
+        return render(request, "auctions/categories.html", {
+            "categories": categories
+            })
