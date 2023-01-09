@@ -7,6 +7,20 @@
 {% endblock %}
 
 {% block body %}
+<div class="text-center title">
+    <form action="{% url 'all_categories' %}" method="POST">
+        {% csrf_token %}
+        <label for="category">Category:</label>
+            <select name="category" id="category">
+                {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+            </select>
+        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </form>
+</div>
+
+
     <h2 class="title text-center">{{ category.categoryName }}</h2>
     <div class="container d-flex flex-wrap justify-content-around">
         
