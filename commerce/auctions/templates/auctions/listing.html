@@ -51,47 +51,54 @@
             <!-- Bid section -->
             <div class="text-center my-4">
                 <h5 class="pt-2">
-                    {% if listing.active %}Current bid:{% else %} Winning bid: {% endif %} <strong>${{ listing.price.bid }}</strong>
-                </h5>
+                    {% if message %}
+                    {% if update %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message}}
+                    </div>
+                    {% endif %}
+                    {% endif %} <strong>${{ listing.price.bid }}</strong>
+                </h5> 
                 
                 {% if listing.active %}
                     <!-- Badges -->
-                    <small class="mt-0"><span class="badge badge-pill badge-light">{{ listing.no_of_bids }} bid(s).</span></small>
+                    <small class="mt-0"><span class="badge badge -pill badge-light">{{ listing.no_of_bids }} bid(s).</span></small>
                     <small>
                         <span class="badge badge-pill badge-success">Your bid is the highest bid.</span>
                     </small>
-                    {% endif %}
+                    {% endif %} {{ message }}
                     
                     <!-- Bid form -->
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated and listing.active %}
                     <div class="pt-2">
-                        
                         <div class="row pt-2">
-                            <div class="col-md-6 col-sm-10 m-auto">
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                        {% for field in form %}
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                <div class="input-group-text">$</div>
-                                                </div>
-                                                {{ field }}
-                                            </div>
-                                        {% endfor %}
-                                
+                        <div class="col-md-6 col-sm-10 m-auto">
+                            <form action="{% url 'new_bid' id=listing.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            <input type="number" min="0" name="newbid" placeholder="Add bid">
+                            </div>
                             </div>
                         </div>
-                        
+                        </div>
                         <div class="row">
                             <div class="col text-center my-1">
                                 <input class="btn btn-primary ml-2" type="submit" value="Place bid">
                             </form>
                                 <!-- Close auction -->
-                                {% if user.is_authenticated and user == listing.author and listing.active %}
-                                <form action="" method="POST" class="d-inline-block">
+                                {% if user.is_authenticated %}
+                                {% if owner %}
+                                <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger ml-1">Close auction</button>
+                                    <button type="submit" class="btn btn-danger ml-1">Close Auction</button>
                                 </form>
+                                {% endif %}
                                 {% endif %}
                             </div>
                         </div>
@@ -142,7 +149,7 @@
         {% for comment in all_comments %}
             <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
                 <div class="col-6">
-                    <p>Posted by <strong>{{ comment.author }}</strong></p>
+                    <p><strong>{{ comment.author }}</strong> commented:</p>
                 </div>
                 <div class="col-6 text-right text-muted">
                     <small><em>{{ comment.time }}</em></small>

@@ -111,10 +111,12 @@ def listing(request, id):
     data = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
+    owner = request.user.username == data.owner.username
     return render(request, "auctions/listing.html", {
         "listing": data,
         "listing_in_watchlist": listing_in_watchlist,
-        "all_comments": all_comments
+        "all_comments": all_comments,
+        "owner": owner,
     })
 
 def watchlist(request):
@@ -156,9 +158,55 @@ def add_comment(request, id):
     message = request.POST['new_comment']
 
     new_comment = Comment(
-        author=user,
+        author=user, 
         listing=data,
         message=message
     )
     new_comment.save()
     return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+def new_bid(request, id):
+    newbid = request.POST['newbid']
+    data = Listing.objects.get(pk=id)
+    listing_in_watchlist = request.user in data.watchlist.all()
+    all_comments = Comment.objects.filter(listing=data)
+    owner = request.user.username == data.owner.username
+    if int(newbid) > data.price.bid:
+        higher_bid = Bid(user=request.user, bid=int(newbid))
+        higher_bid.save()
+        data.price = higher_bid
+        data.save()
+        return render(request, "auctions/listing.html", {
+            "listing": data,
+            "listing_in_watchlist": listing_in_watchlist,
+            "all_comments": all_comments,
+            "owner": owner,
+            "message": "Bid successful",
+            "update": True
+            })
+    else:
+         return render(request, "auctions/listing.html", {
+            "listing": data,
+            "listing_in_watchlist": listing_in_watchlist,
+            "all_comments": all_comments,
+            "owner": owner,
+            "message": "Bid failed",
+            "update": False
+            })
+
+def close_auction(request, id):
+    data = Listing.objects.get(pk=id)
+    data.active = False
+    data.save()
+    listing_in_watchlist = request.user in data.watchlist.all()
+    all_comments = Comment.objects.filter(listing=data)
+    owner = request.user.username == data.owner.username
+    return render(request, "auctions/listing.html", {
+        "listing": data,
+        "listing_in_watchlist": listing_in_watchlist,
+        "all_comments": all_comments,
+        "owner": owner,
+        "update": True,
+        "message": "Congratulations! Your auction has closed.",
+         })
+
