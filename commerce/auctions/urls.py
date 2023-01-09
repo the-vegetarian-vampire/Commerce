@@ -12,8 +12,9 @@ urlpatterns = [
     path("categories", views.categories, name="categories"),
     path("all_categories", views.all_categories, name="all_categories"),
     path("listing/<int:id>", views.listing, name="listing"),
-    path("removeWatchlist/<int:id>", views.removeWatchlist, name="removeWatchlist"),
-    path("addWatchlist/<int:id>", views.addWatchlist, name="addWatchlist"),
-    path("watchlist/<int:id>", views.display_watchlist, name="watchlist"),
+    path("remove_watchlist/<int:id>", views.remove_watchlist, name="remove_watchlist"),
+    path("add_watchlist/<int:id>", views.add_watchlist, name="add_watchlist"),
+    path("display_watchlist", views.display_watchlist, name="display_watchlist"),
+    path("add_comment/<int:id>", views.add_comment, name="add_comment"),
 
 ]

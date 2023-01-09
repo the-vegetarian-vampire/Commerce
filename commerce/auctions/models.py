@@ -33,12 +33,11 @@ class Bid(models.Model):
     def __str__(self):
         return str(self.number)
 
-
 class Comment(models.Model):
     item = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comments")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user_comment")
     comment = models.CharField(max_length=280)
     time = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.comment)
+        return f"{self.author} comment on {self.item}"

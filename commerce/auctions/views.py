@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Listing
+from .models import User, Category, Listing, Bid, Comment
 
 
 def index(request):
@@ -108,9 +108,11 @@ def all_categories(request):
 def listing(request, id):
     data = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in data.watchlist.all()
+    all_comments = Comment.objects.filter(item=data)
     return render(request, "auctions/listing.html", {
         "listing": data,
         "listing_in_watchlist": listing_in_watchlist,
+        "all_comments": all_comments
     })
 
 def watchlist(request):
@@ -120,13 +122,13 @@ def watchlist(request):
             "categories": categories
             })
 
-def removeWatchlist(request, id):
+def remove_watchlist(request, id):
     data = Listing.objects.get(pk=id)
     user = request.user
     data.watchlist.remove(user)
     return HttpResponseRedirect(reverse("listing",args=(id, )))
 
-def addWatchlist(request, id):
+def add_watchlist(request, id):
     data = Listing.objects.get(pk=id)
     user = request.user
     data.watchlist.add(user)
@@ -145,3 +147,16 @@ def categories(request):
         return render(request, "auctions/categories.html", {
             "categories": categories
             })
+
+def add_comment(request, id):
+    user = request.user
+    data = Listing.objects.get(pk=id)
+    message = request.POST['new_comment']
+
+    new_comment = Comment(
+        author=user,
+        listing=data,
+        message=message
+    )
+    new_comment.save()
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
