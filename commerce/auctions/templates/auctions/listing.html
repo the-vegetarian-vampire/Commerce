@@ -51,7 +51,7 @@
             <!-- Bid section -->
             <div class="text-center my-4">
                 <h5 class="pt-2">
-                    {% if listing.active %}Current price:{% else %} Winning bid: {% endif %} <strong>$ {{ listing.price }}</strong>
+                    {% if listing.active %}Current bid:{% else %} Winning bid: {% endif %} <strong>${{ listing.price.bid }}</strong>
                 </h5>
                 
                 {% if listing.active %}
@@ -142,7 +142,7 @@
         {% for comment in all_comments %}
             <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
                 <div class="col-6">
-                    <p>Posted by<strong>{{ comment.author }}</strong></p>
+                    <p>Posted by <strong>{{ comment.author }}</strong></p>
                 </div>
                 <div class="col-6 text-right text-muted">
                     <small><em>{{ comment.time }}</em></small>

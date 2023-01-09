@@ -82,11 +82,13 @@ def create_new(request):
         current_user = request.user
 
         data = Category.objects.get(categoryName=category)
+        bid = Bid(bid=float(price), user=current_user)
+        bid.save()
 
         new_listing = Listing(
             title=title,
             description=description,
-            price=float(price),
+            price=bid,
             imageURL=imageURL,
             category=data,
             owner=current_user,
@@ -108,7 +110,7 @@ def all_categories(request):
 def listing(request, id):
     data = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in data.watchlist.all()
-    all_comments = Comment.objects.filter(item=data)
+    all_comments = Comment.objects.filter(listing=data)
     return render(request, "auctions/listing.html", {
         "listing": data,
         "listing_in_watchlist": listing_in_watchlist,
