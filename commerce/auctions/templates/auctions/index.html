@@ -4,7 +4,7 @@
 {% block title %} {% endblock %}
 
 {% block body %}
-    <h2 class="text-center title" style="padding-top: 20px; padding-bottom: 10px;" >Active Listings</h2>
+  <h2 class="text-center title" style="padding-top: 20px; padding-bottom: 10px;" >Active Listings</h2>
     
 
     <div class="container d-flex flex-wrap justify-content-center"></div>
@@ -13,18 +13,21 @@
     {% for listing in listings %}
         <div class="card m-2 border-bottom" style="width: 18rem;">
             <img class="card-img-top" src="{% if listing.imageURL %}{{ listing.imageURL }}{% else %}http://www.aaru.edu.jo/websites/aaru2/wp-content/plugins/learnpress/assets/images/no-image.png?Mobile=1&Source=%2F%5Flayouts%2Fmobile%2Fdispform%2Easpx%3FList%3D78b536db%252De7c7%252D45d9%252Da661%252Ddb2a2aa2fbaf%26View%3D6efc759a%252D0646%252D433c%252Dab6e%252D2f027ffe0799%26RootFolder%3D%252Fwebsites%252Faaru2%252Fwp%252Dcontent%252Fplugins%252Flearnpress%252Fassets%252Fimages%26ID%3D4786%26CurrentPage%3D1{% endif %}" alt="Photo of {{ listing.title }}">  
-            <div class="card-body border-top">
-          <h5 class="card-title text-truncate">{{ listing.title }}</h5>
+          <div class="card-body border-top">
+            <h5 class="card-title text-truncate">{{ listing.title }}</h5>
           <div class="d-flex justify-content-between">
             <h5 class="card-text p-2"><strong>${{ listing.price.bid }}</strong></h5>
             <span class="p-2">bids</span>
         </div>
           <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
-          <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details</a>
+          <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
+            <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/>
+            <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"/>
+          </svg></a>
         </div>
         </div>
     {% endfor %}
-</div>
+    </div>
 
 
 {% endblock %}

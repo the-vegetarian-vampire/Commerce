@@ -27,7 +27,9 @@
                         {% if listing_in_watchlist %}
                     <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus" aria-hidden="true"></i> Remove from Watchlist</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                          </svg></i> Remove from Watchlist</button>
                     </form> 
                 {% else %}
                     <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block">
@@ -42,11 +44,11 @@
 
             <!-- Listing information -->
             <h3 class="m-0 pb-3">{{ listing.title }}</h3>
-            <p class="my-1 pb-3">
-                <small><em>"{{ listing.description }}"</em></small>
-            </p>
             <p>
                 <small>Auction created by: {{ listing.owner }}</small>
+            </p>
+            <p class="my-1 pb-3">
+                <small><em>"{{ listing.description }}"</em></small>
             </p>
             
             <!-- Bid section -->
@@ -73,10 +75,7 @@
                 
                 {% if listing.active %}
                     <!-- Badges -->
-                    <small class="mt-0"><span class="badge badge -pill badge-light">{{ bid.num_bids }} bid(s).</span></small>
-                    <small>
-                        <span class="badge badge-pill badge-success">Your bid is the highest bid.</span>
-                    </small>
+                    <small class="mt-0">{{ bid.num_bids }} bid(s).</small>
                     {% endif %}
                     
                     <!-- Bid form -->
@@ -117,7 +116,7 @@
                     <!-- Message for user not logged in -->
                     {% else %}
                         <p class="text-danger pt-1">
-                            <small>Please <strong><a href="{% url 'login' %}" class="text-danger">sign in</a></strong> to place your bid.</small>
+                            <small><strong><a href="{% url 'login' %}" class="text-danger">Sign in</a></strong> to bid.</small>
                         </p>
                     </div>
                     {% endif %}
@@ -131,7 +130,7 @@
             </div>
         </div>
     </div>
-    <!--Comment section-->
+    <!--Comments-->
     <div class="row py-4 justify-content-center">
         <div class="col col-sm-10 mx-3 mx-sm-0">
         <h4>Comments <span class="badge badge-secondary"></span></h4>
@@ -141,12 +140,12 @@
                 <div class="form-group pt-2">
                     <input type="text" name="new_comment" placeholder="Add comment...">
                 </div>
-                <div class="form-group text-right mb-2">
-                    <input value="Add comment" class="btn btn-primary" type="submit">
+                <div class="form-group text-right mb-2"></div>
+                    <input value="Add comment" class="btn btn-primary btn-sm" type="submit">
                 </div>
             </form>
         {% else %}
-        <p class="text-danger"><small>Please <strong><a href="{% url 'login' %}" class="text-danger">sign in</a></strong> to add a comment.</small></p>
+        <p class="text-danger"><small><strong><a href="{% url 'login' %}" class="text-danger">Sign in</a></strong> to comment.</small></p>
         {% endif %}
     </div>
 
@@ -166,6 +165,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
+    
 </div>
 {% endblock %}

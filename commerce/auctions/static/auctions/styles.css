@@ -13,3 +13,16 @@ body {
     padding-top: 2rem;
     padding-bottom: 1.5rem;
 }
+
+.center {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
