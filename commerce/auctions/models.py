@@ -15,6 +15,9 @@ class Bid(models.Model):
     bid = models.DecimalField(default=0, max_digits=6, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bid")
 
+    def num_bids(self):
+        return self.bids.all().count()
+
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=280)

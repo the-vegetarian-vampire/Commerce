@@ -1,22 +1,26 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2 class="title text-center">Watchlist</h2>
-    <div class="container-fluid"></div>
+    <h2 class="title text-center" style="padding-top: 20px;">Watchlist</h2>
+    <div class="container-fluid">
     
     {% for listing in listings %}
     <div class="card" style="width: 18rem;">
+      <div class="row mb-3 watchlist border-bottom mx-auto">
         <img class="card-img-top" src="{{ listing.imageURL }}" alt="{{ listing.title }}">
+      </div>
         <div class="card-body border-top">
           <h5 class="card-title text-truncate">{{ listing.title }}</h5>
           <div class="d-flex justify-content-between">
-            <h5 class="card-text p-2"><strong>${{ listing.price }}</strong></h5>
+            <h5 class="card-text p-2"><strong>${{ listing.price.bid }}</strong></h5>
             <span class="p-2">bids</span>
         </div>
           <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
           <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details</a>
         </div>
         </div>
+      </div>
+      
         {% empty %}
         <div class="title text-center">No items in watchlist.</div>
     {% endfor %}

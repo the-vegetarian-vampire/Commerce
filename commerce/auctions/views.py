@@ -171,8 +171,8 @@ def new_bid(request, id):
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
     owner = request.user.username == data.owner.username
-    if int(newbid) > data.price.bid:
-        higher_bid = Bid(user=request.user, bid=int(newbid))
+    if float(newbid) > data.price.bid:
+        higher_bid = Bid(user=request.user, bid=float(newbid))
         higher_bid.save()
         data.price = higher_bid
         data.save()

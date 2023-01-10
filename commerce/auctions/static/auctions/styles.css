@@ -1,9 +1,15 @@
 body {
     padding: 10px;
+    padding-top: 65px;
 }
 
 .img {
     width: 200px;
     height: 300px;
     object-fit: cover;
+}
+
+.title {
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
 }
