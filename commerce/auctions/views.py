@@ -111,12 +111,14 @@ def listing(request, id):
     data = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
+    total_comments = all_comments.count()
     owner = request.user.username == data.owner.username
     return render(request, "auctions/listing.html", {
         "listing": data,
         "listing_in_watchlist": listing_in_watchlist,
         "all_comments": all_comments,
         "owner": owner,
+        "total_comments": total_comments,
     })
 
 def watchlist(request):
@@ -168,6 +170,7 @@ def add_comment(request, id):
 def new_bid(request, id):
     newbid = request.POST['newbid']
     data = Listing.objects.get(pk=id)
+    all_bids = Bid.objects.count()
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
     owner = request.user.username == data.owner.username
@@ -178,15 +181,17 @@ def new_bid(request, id):
         data.save()
         return render(request, "auctions/listing.html", {
             "listing": data,
+            "all_bids": all_bids,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,
-            "message": "Bid successful",
+            "message": "Bid successful!",
             "update": True
             })
     else:
          return render(request, "auctions/listing.html", {
             "listing": data,
+            "all_bids": all_bids,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,

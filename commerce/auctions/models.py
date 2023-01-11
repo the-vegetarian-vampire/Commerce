@@ -16,7 +16,7 @@ class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bid")
 
     def num_bids(self):
-        return self.bids.all().count()
+        return self.bids.all()
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
