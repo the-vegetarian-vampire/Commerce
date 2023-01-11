@@ -12,11 +12,9 @@ class Category(models.Model):
         return self.categoryName
 
 class Bid(models.Model):
-    bid = models.DecimalField(default=0, max_digits=6, decimal_places=2)
+    bid = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bid")
-
-    def num_bids(self):
-        return self.bids.all()
+    time = models.DateTimeField(auto_now=True)
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
@@ -37,7 +35,7 @@ class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=True, related_name="listing_comment")
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user_comment")
     message = models.CharField(max_length=280)
-    time = models.DateField(auto_now_add=True)
+    time = models.DateField(auto_now=True)
 
     def __str__(self):
         return f"{self.author} comment on {self.listing}"

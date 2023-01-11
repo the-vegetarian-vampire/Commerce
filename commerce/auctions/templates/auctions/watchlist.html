@@ -4,29 +4,29 @@
     <h2 class="title text-center" style="padding-top: 20px; padding-bottom: 10px;">Watchlist</h2>
     <div class="row mb-3 watchlist border-bottom mx-auto"></div>
       
+    <h4 class="text-center">
     {% for listing in listings %}
     <div class="row mb-3 watchlist border-bottom mx-auto">
-    <div class="card m-2 border-bottom" style="width: 18rem;">
+    <div class="text-center" style="width: 18rem;">
         <img class="card-img-top" src="{{ listing.imageURL }}" alt="{{ listing.title }}">
       </div>
+      
         <div class="card-body">
           <h5 class="card-title text-truncate">{{ listing.title }}</h5>
-          <div class="d-flex justify-content-between">
-            <h5 class="card-text p-2"><strong>${{ listing.price.bid }}</strong></h5>
+          <div class="text-center">
+            <h5 class="text-center"><strong>${{ listing.price.bid }}</strong></h5>
           </div>
-            <span class="p-2">{{ all_bids }} bids</span>
+            <span class="p-2"><small>{{ all_bids }} total bids</span></small>
           <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
           <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
             <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/>
             <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"/>
           </svg></a>
         </div>
-        </div>
-        </div>
       </div>
-  
-    {% empty %}
-    <div class="title text-center">No items in watchlist.</div>
-    {% endfor %}
-
-{% endblock %}
+      {% empty %}
+      <div class="title text-center"><small>No items in watchlist.</small></div>
+      {% endfor %}
+      
+      {% endblock %}
+    </h4>

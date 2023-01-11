@@ -111,12 +111,14 @@ def listing(request, id):
     data = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
+    all_bids = Bid.objects.count()
     total_comments = all_comments.count()
     owner = request.user.username == data.owner.username
     return render(request, "auctions/listing.html", {
         "listing": data,
         "listing_in_watchlist": listing_in_watchlist,
         "all_comments": all_comments,
+        "all_bids": all_bids,
         "owner": owner,
         "total_comments": total_comments,
     })
@@ -143,8 +145,10 @@ def add_watchlist(request, id):
 def display_watchlist(request):
     c_user = request.user
     listings = c_user.list_watchlist.all() 
+    all_bids = Bid.objects.count()
     return render(request, "auctions/watchlist.html", {
         "listings": listings,
+        "all_bids": all_bids,
     })
 
 def categories(request):
@@ -215,3 +219,4 @@ def close_auction(request, id):
         "message": "Congratulations! Your auction has closed.",
          })
 
+        

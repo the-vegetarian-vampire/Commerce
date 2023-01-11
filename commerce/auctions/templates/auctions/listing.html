@@ -44,7 +44,7 @@
             <!-- Listing information -->
             <h3 class="m-0 pb-3">{{ listing.title }}</h3>
             <p>
-                <small>Auction created by: {{ listing.owner }}</small>
+                <small>Auction created by: <strong>{{ listing.owner }}</strong></small>
             </p>
             <p class="my-1 pb-3">
                 <small><em>"{{ listing.description }}"</em></small>
@@ -71,11 +71,14 @@
                     </div>
                     {% endif %}
                     {% endif %} <strong> Current Price: ${{ listing.price.bid }}</strong>
+                    <p></p>
+                    <p><small>Last bid:</small></p>
+                    <p><small class="mt-0"> {{ listing.time }} </small></p>
                 </h5> 
                 
                 {% if listing.active %}
-                    <!-- Badges -->
-                    <small class="mt-0">{{ all_bids }} bid(s).</small>
+                    <!-- All bids -->
+                    <small class="mt-0">{{ all_bids }} total bid(s).</small>
                     {% endif %}
                     
                     <!-- Bid form -->
@@ -94,21 +97,23 @@
                         </div>
                         </div>
                         <div class="row">
+                            <!-- Can't bid on own listing -->
+                            {% if not owner %}
                             <div class="col text-center my-1">
                                 <input class="btn btn-primary ml-2" type="submit" value="Place bid">
+                                {% endif %}
                             </form>
                                 <!-- Close auction -->
                                 {% if user.is_authenticated %}
                                 {% if owner %}
                                 <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger ml-1">Close Auction</button>
+                                    <button type="submit" class="btn btn-danger btn-sm ml-5">Close Auction</button>
                                 </form>
                                 {% endif %}
                                 {% endif %}
                             </div>
                         </div>
-                                
                                 </div>
                             </div>
                         
@@ -120,6 +125,7 @@
                         </p>
                     </div>
                     {% endif %}
+
                 <!-- If listing not active, show winner -->
                     {% if listing.current_winner == user %}
                         <span class="badge badge-secondary badge-success">You won this auction!</span>
@@ -132,25 +138,26 @@
 </div>
 <!--Comment Container-->
 <div class="container">
-    <span class="badge badge-info"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+    <span class="badge badge-info"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
         <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
         <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-          </svg> Comments: {{ total_comments }}</span>
+          </svg> 
+          Comments: {{ total_comments }}</span>
           {% for comment in all_comments %}
           <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
               <div class="col-6">
                   <p><strong>{{ comment.author }}</strong> commented:</p>
-                </div>
-                <div class="col-6 text-right text-muted">
-                    <small><em>{{ comment.time }} </em></small> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
-                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
-                    </svg>
-                </div>
-                <div class="col-xl-12 pt-1">
+                  <div class="col-xl-12 pt-1">
                     {{ comment.message }}
+                    </div>
+                  <p class="text-muted"><small>{{ comment.time }} </small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+                    </svg></p>
                 </div>
             </div>
             {% endfor %}
+
             <!--Comments-->
             <div class="row py-4 justify-content-center">
                 <div class="col col-sm-10 mx-3 mx-sm-0">
@@ -158,7 +165,6 @@
                 {% if user.is_authenticated %}
                     <form action="{% url 'add_comment' id=listing.id %}" method="POST">
                         {% csrf_token %}
-            
                         <div class="form-group" rows="3">
                             <input type="text" name="new_comment" placeholder="What are your thoughts?">
                         </div>

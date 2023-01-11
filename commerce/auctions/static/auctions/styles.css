@@ -15,6 +15,7 @@ body {
 }
 
 .center {
+  vertical-align: middle;
   position: absolute;
   margin: auto;
   top: 0;
