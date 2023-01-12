@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+    <div class="container-sm" width=50%>
     <h2 class="text-center title" style="padding-top: 40px; padding-bottom: 10px;">Login</h2>
 
     {% if message %}
@@ -22,5 +22,6 @@
     <br>
         <p class="text-center title">Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
     </br>
+    </div>
 
 {% endblock %}

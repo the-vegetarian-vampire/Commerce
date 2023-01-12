@@ -27,3 +27,7 @@ body {
   background-color: #ccc;
   border-radius: 3px;
 }
+
+.container-sm {
+    width: 10%;
+}

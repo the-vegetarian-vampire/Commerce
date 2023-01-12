@@ -17,7 +17,7 @@
             <h5 class="card-title text-truncate">{{ listing.title }}</h5>
           <div class="d-flex justify-content-between">
             <h5 class="card-text p-2"><strong>${{ listing.price.bid }}</strong></h5>
-            <span class="p-2">bids</span>
+            <p>{{ all_bids }} bids</p>
         </div>
           <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
           <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
@@ -26,8 +26,11 @@
           </svg></a>
         </div>
         </div>
-    {% endfor %}
-    </div>
+        {% empty %}
+      </div>
+      <br>
+      <h6 class="text-center title">No current listings.</h6>
+      {% endfor %}
 
 
 {% endblock %}
