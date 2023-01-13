@@ -7,6 +7,9 @@ class User(AbstractUser):
 
 class Category(models.Model):
     categoryName = models.CharField(max_length=64)
+   
+    class Meta:
+        ordering = ('categoryName',)
 
     def __str__(self) -> str:
         return self.categoryName
