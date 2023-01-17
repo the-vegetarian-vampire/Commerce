@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <div class="container-sm" width=50%>
+    <div class="container" width=50%>
         <h2 class="text-center title" style="padding-top: 40px; padding-bottom: 10px;">Login</h2>
 
         {% if message %}
@@ -9,7 +9,7 @@
         {% endif %}
 
         <div class="row justify-content-center">
-        <form class="col-3" action="{% url 'login' %}" method="post">
+        <form class="col-14" action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <input autofocus class="form-control" type="text" name="username" placeholder="Username">

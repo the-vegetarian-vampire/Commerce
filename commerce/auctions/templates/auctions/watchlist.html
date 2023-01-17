@@ -4,17 +4,18 @@
   <!-- header -->
   <h2 class="title text-center" style="padding-top: 20px; padding-bottom: 10px;">Watchlist</h2>
   <div class="border-bottom"></div>
-    
+  
   {% for listing in listings %}
-  <div class="border-bottom" style="display: inline">
+  <div style="display: inline">
+
 
      <!-- image -->
-    <div style="width:300px; float:left;">
-      <img class="card-img-top mx-auto" src="{{ listing.imageURL }}" alt="{{ listing.title }}" style="width: 16rem;">
+    <div class="border-bottom" style="width:300px; float:left; margin-left: 25px; margin-bottom: 15px;">
+      <img class="card-img-top mx-auto" src="{{ listing.imageURL }}" alt="{{ listing.title }}" style="width: 16rem; margin-bottom: 20px;">
     </div>
 
     <!-- contents -->
-      <div style="width: 19%; display: inline-block;">
+      <div class="title text-center" style="width: 19%; display: inline-block; margin-top: 15px;">
           <h5 class="card-title text-truncate">{{ listing.title }}</h5>
           <h5 class="text-center"><strong>${{ listing.price.bid }}</strong></h5>
           <span class="p-2"><small>{{ all_bids }} total bids</small></span>
