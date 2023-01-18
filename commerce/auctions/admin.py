@@ -3,8 +3,6 @@ from .models import Listing, User, Category, Bid, Comment
 
 # Register your models here.
 
-
-
 admin.site.register(Listing)
 admin.site.register(User)
 admin.site.register(Category)

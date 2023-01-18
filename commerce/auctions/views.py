@@ -9,12 +9,12 @@ from .models import User, Category, Listing, Bid, Comment
 
 def index(request):
     listings = Listing.objects.filter(active=True)
-    all_bids = Bid.objects.count()
     categories = Category.objects.all()
+    total_bids = Bid.objects.count()
     return render(request, "auctions/index.html", {
         "listings": listings,
         "categories": categories,
-        "all_bids": all_bids,
+        "total_bids": total_bids,
     })
 
 
@@ -102,13 +102,13 @@ def all_categories(request):
     if request.method == "POST":
         categoryform = request.POST['category']
         category = Category.objects.get(categoryName=categoryform)
-        all_bids = Bid.objects.count()
+        total_bids = Bid.objects.count()
         listings = Listing.objects.filter(active=True, category=category)
         categories = Category.objects.all()
         return render(request, "auctions/index.html", {
             "listings": listings,
             "categories": categories,
-            "all_bids": all_bids,
+            "total_bids": total_bids,
         })
 
 def listing(request, id):
@@ -116,7 +116,7 @@ def listing(request, id):
     listing_in_watchlist = request.user in data.watchlist.all()
     all_watchers = data.watchlist.all().count()
     all_comments = Comment.objects.filter(listing=data)
-    all_bids = Bid.objects.count()
+    total_bids = Bid.objects.count()
     total_comments = all_comments.count()
     owner = request.user.username == data.owner.username
     return render(request, "auctions/listing.html", {
@@ -124,7 +124,7 @@ def listing(request, id):
         "listing_in_watchlist": listing_in_watchlist,
         "all_watchers": all_watchers,
         "all_comments": all_comments,
-        "all_bids": all_bids,
+        "total_bids": total_bids,
         "owner": owner,
         "total_comments": total_comments,
     })
@@ -132,8 +132,10 @@ def listing(request, id):
 def watchlist(request):
     if request.method == "GET":
         categories = Category.objects.all()
+        total_bids = Bid.objects.count()
         return render(request, "auctions/watchlist.html", {
-            "categories": categories
+            "categories": categories,
+            "total_bids": total_bids,
             })
 
 def remove_watchlist(request, id):
@@ -151,10 +153,10 @@ def add_watchlist(request, id):
 def display_watchlist(request):
     c_user = request.user
     listings = c_user.list_watchlist.all() 
-    all_bids = Bid.objects.count()
+    total_bids = Bid.objects.count()
     return render(request, "auctions/watchlist.html", {
         "listings": listings,
-        "all_bids": all_bids,
+        "total_bids": total_bids,
     })
 
 def categories(request):
@@ -180,18 +182,18 @@ def add_comment(request, id):
 def new_bid(request, id):
     newbid = request.POST['newbid']
     data = Listing.objects.get(pk=id)
-    all_bids = Bid.objects.count()
+    total_bids = Bid.objects.values_list('listing').count()
     listing_in_watchlist = request.user in data.watchlist.all()
     all_comments = Comment.objects.filter(listing=data)
     owner = request.user.username == data.owner.username
-    if float(newbid) > data.price.bid:
+    if float(newbid) > data.price:
         higher_bid = Bid(user=request.user, bid=float(newbid))
         higher_bid.save()
         data.price = higher_bid
         data.save()
         return render(request, "auctions/listing.html", {
             "listing": data,
-            "all_bids": all_bids,
+            "total_bids": total_bids,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,
@@ -201,7 +203,7 @@ def new_bid(request, id):
     else:
          return render(request, "auctions/listing.html", {
             "listing": data,
-            "all_bids": all_bids,
+            "total_bids": total_bids,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,

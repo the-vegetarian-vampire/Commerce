@@ -25,7 +25,7 @@
             <!-- Watchlist Buttons -->
             {% if user.is_authenticated %}
             <div>
-                <small>Auction created by: <strong>{{ listing.owner }}</strong></small>
+                <small style="font-size:12px;">Auction created by: <strong>{{ listing.owner }}</strong></small>
 
                 {% if listing_in_watchlist %}
                 <!-- Remove button -->
@@ -73,14 +73,14 @@
                         {{ message}}
                     </div>
                     {% endif %}
-                    {% endif %}  Current Price: <strong>${{ listing.price.bid|intcomma }}</strong>
-                    <p><small>Last bid:</small>
-                    <br><small style="font-size:12px; ">{{ listing.time|naturaltime }} </small>
+                    {% endif %}  Current Price: <strong>${{ listing.price|intcomma }}</strong>
+                    <p><small style="font-size:12px;">Last bid:</small>
+                    <br><small style="font-size:12px;">{{ listing.time|naturaltime }} </small>
                     </p>
                 </h5> 
                 {% if listing.active %}
                 <!-- All bids -->
-                <small>{{ all_bids }} total bid(s).</small>
+                <small>{{ total_bids }} total bid(s).</small>
                 
                 {% endif %}
                     <!-- Bid form -->
@@ -124,7 +124,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                                </div>
+                            </div>
                             </div>
                         
 
@@ -156,23 +156,16 @@
         <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
         </svg> Comments: {{ total_comments }}</span>
 
-         <!--Time and Author-->
+         <!--Author and time-->
           {% for comment in all_comments %}
-          <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
-              <div class="col-6">
-                  <strong>{{ comment.author }}</strong> commented:
-              </div>
+            <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
+                <div class="col-6"><strong>{{ comment.author }}</strong> commented:</div>
+                <div class="col-6 text-right text-muted"><small>{{ comment.time|naturaltime }} </small></div>
 
-                <div class="col-6 text-right text-muted"><small>{{ comment.time }} </small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
-                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
-                </svg>
-                </div>
-
-                    <!--Author Comments-->
-                  <div class="col-xl-12 pt-1" style="margin-bottom: 15px; margin-top: 10px;">
+                <!--Author Comments-->
+                    <div class="col-xl-12 pt-1" style="margin-bottom: 15px; margin-top: 10px;">
                     {{ comment.message }}
                     </div>
-                
             </div>
 
             {% empty %}
@@ -186,17 +179,14 @@
             <div class="justify-content-center align-items-center">
                 <div class="col col-lg-14 mx-3 mx-sm-0">
                 <h6>Comment as <strong>{{ user.username }}</strong>:</h6>
-
                 {% if user.is_authenticated %}
                     <form action="{% url 'add_comment' id=listing.id %}" method="POST">
-                        {% csrf_token %}
-                        <textarea class="form-group col-md-12" rows="3" type="text" name="new_comment" maxlength="2000" placeholder="What are your thoughts?"></textarea>
-                        
-                        <div class="form-group text-right mb-2"></div>
-                            <input value="Add comment" class="btn btn-primary btn-sm" type="submit">
-                        </div>
+                    {% csrf_token %}
+                    <textarea class="form-group col-md-12" rows="3" type="text" name="new_comment" maxlength="2000" placeholder="What are your thoughts?"></textarea>
+                    <div class="form-group text-right mb-2"></div>
+                        <input value="Add comment" class="btn btn-primary btn-sm" type="submit">
                     </form>
-                    
+                </div>
                 {% else %}
                 <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to comment.</small></p>
                 {% endif %}

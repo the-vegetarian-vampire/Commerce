@@ -20,8 +20,8 @@
     <!-- contents -->
       <div class="title text-center" style="width: 19%; display: inline-block; margin-top: 15px;">
           <h5 class="card-title text-truncate">{{ listing.title }}</h5>
-          <h5 class="text-center"><strong>${{ listing.price.bid|intcomma }}</strong></h5>
-          <span class="p-2"><small>{{ all_bids }} total bids</small></span>
+          <h5 class="text-center"><strong>${{ listing.price|intcomma }}</strong></h5>
+          <span class="p-2"><small>{{ total_bids }} total bids</small></span>
           <p class="card-text text-truncate"><small>"{{ listing.description }}"</small></p>
           <!-- Listing "Details" button -->
           <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary btn-sm">Details <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
