@@ -9,10 +9,12 @@ from .models import User, Category, Listing, Bid, Comment
 
 def index(request):
     listings = Listing.objects.filter(active=True)
+    all_bids = Bid.objects.count()
     categories = Category.objects.all()
     return render(request, "auctions/index.html", {
         "listings": listings,
         "categories": categories,
+        "all_bids": all_bids,
     })
 
 
@@ -100,11 +102,13 @@ def all_categories(request):
     if request.method == "POST":
         categoryform = request.POST['category']
         category = Category.objects.get(categoryName=categoryform)
+        all_bids = Bid.objects.count()
         listings = Listing.objects.filter(active=True, category=category)
         categories = Category.objects.all()
         return render(request, "auctions/index.html", {
             "listings": listings,
             "categories": categories,
+            "all_bids": all_bids,
         })
 
 def listing(request, id):
