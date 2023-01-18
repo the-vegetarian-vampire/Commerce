@@ -5,8 +5,8 @@
 {% block body %}
 
 {% if listing.active == False %}
-    <div class="alert alert-dark text-center" role="alert">
-        Auction ended.
+    <div class="alert alert-success text-center" role="alert">
+        The auction has ended.
     </div>
 {% endif %}
 
@@ -49,7 +49,9 @@
 
             <!-- Listing information -->
             <h2 class="text-center">{{ listing.title }}</h2>
-            <p class="text-center"><small>"{{ listing.description }}"</small></p>
+            <p class="text-center"><small>"{{ listing.description }}"</small> 
+            <br><span class="badge badge-info">Watchers: {{ all_watchers }}</span></p>
+            
             
             <!-- Bid -->
             <div class="text-center my-4">
@@ -88,6 +90,7 @@
                         <div class="col-md-6 col-sm-10 m-auto">
                             <form action="{% url 'new_bid' id=listing.id %}" method="POST">
                             {% csrf_token %}
+                            {% if not owner %}
                             <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">$</div>
@@ -95,8 +98,9 @@
                             <script> 
                                 function setTwoNumberDecimal(event) {
                                     this.value = parseFloat(this.value).toFixed(2);
-                                    }
-                            </script>
+                                }
+                                </script>
+                            {% endif %}
                             </div>
                             </div>
                         </div>
@@ -110,15 +114,13 @@
                                 {% endif %}
                             </form>
                                 <!-- Close auction button-->
-                                {% if user.is_authenticated %}
-                                {% if owner %}
-                                <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block" style="margin-left: 195px;">
+                                {% if user.is_authenticated and owner %}
+                                <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block" style="margin-left: 205px; margin-bottom: 20px;">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm ml-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                       </svg> Close Auction</button>
                                 </form>
-                                {% endif %}
                                 {% endif %}
                             </div>
                         </div>

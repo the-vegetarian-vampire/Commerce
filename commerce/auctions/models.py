@@ -33,12 +33,14 @@ class Listing(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def num_bids(self):
+        return self.bids.all().count()
 
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=True, related_name="listing_comment")
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user_comment")
     message = models.CharField(max_length=280)
-    time = models.DateField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.author} comment on {self.listing}"
