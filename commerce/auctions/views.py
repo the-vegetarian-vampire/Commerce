@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages 
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Category, Listing, Bid, Comment
+from.forms import BidForm
 
 
 def index(request):
@@ -83,16 +86,16 @@ def create_new(request):
         category = request.POST["category"]
         current_user = request.user
 
-        data = Category.objects.get(categoryName=category)
-        bid = Bid(bid=float(price), user=current_user)
+        category_name = Category.objects.get(categoryName=category)
+        bid = Bid(bid=price, user=current_user)
         bid.save()
 
         new_listing = Listing(
             title=title,
             description=description,
-            price=bid,
+            price=float(price),
             imageURL=imageURL,
-            category=data,
+            category=category_name,
             owner=current_user,
         )
         new_listing.save()
@@ -116,7 +119,6 @@ def listing(request, id):
     listing_in_watchlist = request.user in data.watchlist.all()
     all_watchers = data.watchlist.all().count()
     all_comments = Comment.objects.filter(listing=data)
-    total_bids = Bid.objects.count()
     total_comments = all_comments.count()
     owner = request.user.username == data.owner.username
     return render(request, "auctions/listing.html", {
@@ -124,7 +126,7 @@ def listing(request, id):
         "listing_in_watchlist": listing_in_watchlist,
         "all_watchers": all_watchers,
         "all_comments": all_comments,
-        "total_bids": total_bids,
+        "form": BidForm(),
         "owner": owner,
         "total_comments": total_comments,
     })
@@ -168,32 +170,46 @@ def categories(request):
 
 def add_comment(request, id):
     user = request.user
-    data = Listing.objects.get(pk=id)
+    listing_id = Listing.objects.get(pk=id)
     message = request.POST['new_comment']
 
     new_comment = Comment(
         author=user, 
-        listing=data,
+        listing=listing_id,
         message=message
     )
     new_comment.save()
     return HttpResponseRedirect(reverse("listing",args=(id, )))
 
 def new_bid(request, id):
+    if request.method == "POST":
+        listing = Listing.objects.get(pk=id)
+        form = BidForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.instance.listing = listing
+            if form.instance.bid > listing.current_price():
+                form.save()
+                messages.success(request, "Bid successful!")
+                return HttpResponseRedirect(reverse("listing",args=(id, )))
+            else: 
+                messages.error(request, "Bid failed")
+                return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+"""
+def new_bid(request, id):
     newbid = request.POST['newbid']
-    data = Listing.objects.get(pk=id)
-    total_bids = Bid.objects.values_list('listing').count()
-    listing_in_watchlist = request.user in data.watchlist.all()
-    all_comments = Comment.objects.filter(listing=data)
-    owner = request.user.username == data.owner.username
-    if float(newbid) > data.price:
+    list_id = Listing.objects.get(pk=id)
+    listing_in_watchlist = request.user in list_id.watchlist.all()
+    all_comments = Comment.objects.filter(listing=list_id)
+    owner = request.user.username == list_id.owner.username
+    if float(newbid) > list_id.price:
         higher_bid = Bid(user=request.user, bid=float(newbid))
         higher_bid.save()
-        data.price = higher_bid
-        data.save()
+        list_id.price = higher_bid
+        list_id.save()
         return render(request, "auctions/listing.html", {
-            "listing": data,
-            "total_bids": total_bids,
+            "listing": list_id,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,
@@ -202,24 +218,24 @@ def new_bid(request, id):
             })
     else:
          return render(request, "auctions/listing.html", {
-            "listing": data,
-            "total_bids": total_bids,
+            "listing": list_id,
             "listing_in_watchlist": listing_in_watchlist,
             "all_comments": all_comments,
             "owner": owner,
             "message": "Bid failed",
             "update": False
             })
+"""
 
 def close_auction(request, id):
-    data = Listing.objects.get(pk=id)
-    data.active = False
-    data.save()
-    listing_in_watchlist = request.user in data.watchlist.all()
-    all_comments = Comment.objects.filter(listing=data)
-    owner = request.user.username == data.owner.username
+    listing_id = Listing.objects.get(pk=id)
+    listing_id.active = False
+    listing_id.save()
+    listing_in_watchlist = request.user in listing_id.watchlist.all()
+    all_comments = Comment.objects.filter(listing=listing_id)
+    owner = request.user.username == listing_id.owner.username
     return render(request, "auctions/closed_listings.html", {
-        "listing": data,
+        "listing": listing_id,
         "listing_in_watchlist": listing_in_watchlist,
         "all_comments": all_comments,
         "owner": owner,

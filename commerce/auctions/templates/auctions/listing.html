@@ -75,44 +75,40 @@
                     {% endif %}
                     {% endif %}  Current Price: <strong>${{ listing.price|intcomma }}</strong>
                     <p><small style="font-size:12px;">Last bid:</small>
-                    <br><small style="font-size:12px;">{{ listing.time|naturaltime }} </small>
+                    <br><small style="font-size:12px;">{{ bid.time|naturaltime }} </small>
                     </p>
                 </h5> 
                 {% if listing.active %}
                 <!-- All bids -->
-                <small>{{ total_bids }} total bid(s).</small>
+                <span class="badge badge-warning">{{ listing.num_bids }} total bid(s).</span>
                 
                 {% endif %}
-                    <!-- Bid form -->
-                    {% if user.is_authenticated and listing.active %}
-                    <div class="pt-2">
-                        <div class="row pt-2">
-                        <div class="col-md-6 col-sm-10 m-auto">
-                            <form action="{% url 'new_bid' id=listing.id %}" method="POST">
-                            {% csrf_token %}
-                            {% if not owner %}
-                            <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">$</div>
-                            <input type="number" onchange="setTwoNumberDecimal" min="0.00" step="0.01" value="0.00" name="newbid" placeholder="Add bid">
-                            <script> 
-                                function setTwoNumberDecimal(event) {
-                                    this.value = parseFloat(this.value).toFixed(2);
-                                }
-                                </script>
-                            {% endif %}
-                            </div>
-                            </div>
+
+                <!-- Bid form -->
+                {% if user.is_authenticated and listing.active %}
+                <div class="pt-2">
+                    <div class="row pt-2">
+                    <div class="col-md-6 col-sm-10 m-auto">
+                        <form action="{% url 'new_bid' id=listing.id %}" method="POST">
+                        {% csrf_token %}
+                <!-- Can't bid on own listing -->
+                {% if not owner %}
+                        {% for field in form %}
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                        {{ field }}
+                        {% endfor %}
                         </div>
                         </div>
-                        
-                        <div class="row">    
-                            <!-- Can't bid on own listing -->
-                            {% if not owner %}
-                            <div class="col text-center my-1">
-                                <input class="btn btn-primary btn-sm ml-2" type="submit" value="Place bid">
-                                {% endif %}
-                            </form>
+                    </div>
+                    </div>
+                <div class="row">    
+                <div class="col text-center my-1">
+                    <input class="btn btn-primary btn-sm ml-2" type="submit" value="Place bid">
+                </form>
+                {% endif %}
+
                                 <!-- Close auction button-->
                                 {% if user.is_authenticated and owner %}
                                 <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block" style="margin-left: 205px; margin-bottom: 20px;">
@@ -131,7 +127,7 @@
                     <!-- Message for user not logged in -->
                     {% else %}
                         <p class="text-primary pt-1">
-                            <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to bid.</small>
+                            <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> or Register to bid.</small>
                         </p>
                     </div>
                     {% endif %}
@@ -188,7 +184,7 @@
                     </form>
                 </div>
                 {% else %}
-                <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to comment.</small></p>
+                <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> or Register to comment.</small></p>
                 {% endif %}
             </div>
             
