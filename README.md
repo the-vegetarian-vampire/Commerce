@@ -3,6 +3,7 @@ Harvard's Web Programming with Python and JavaScript:
 
 Youtube:
 
+<img width="1143" alt="Screen Shot 2023-01-18 at 8 39 56 PM" src="https://user-images.githubusercontent.com/105305546/213335561-21cc7b4e-c5cc-467a-9dd5-d327e8fec441.png">
 
 <img width="1143" alt="Screen Shot 2023-01-18 at 8 30 59 PM" src="https://user-images.githubusercontent.com/105305546/213335368-374b7515-153b-401d-89ff-8abfed12c656.png">
 
