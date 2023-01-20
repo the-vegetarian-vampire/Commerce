@@ -10,12 +10,12 @@ An eBay-like e-commerce auction site which allows users to post listings, place 
 Built with `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`.
 
 ## New Listing: 
-Users can create a new listing, specify a `title`, `description`, `price`, add an `imageURL`, and specify a `category`.
+Users can create a new listing, specify a `title`, `description`, `price`, an `imageURL`, and a `category`.
 
 <img width="1115" alt="Screen Shot 2023-01-20 at 4 54 58 PM" src="https://user-images.githubusercontent.com/105305546/213812951-e75f8063-9b75-4095-b8de-96515bc4d2de.png">
 
 ## Categories:
-Users can choose from a list of categories, clicking on the name of any category takes the user to that page displaying all active listings per category.
+Users can choose from a list of `alphabatized` categories: `Art`, `Books`, `Clothing`, `Electronics`, `Food`, and `Other` by clicking on the name of any category takes the user to that page displaying all active listings per category.
 
 <img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
  
