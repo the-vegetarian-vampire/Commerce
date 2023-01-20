@@ -19,7 +19,7 @@ Users can choose from a list of categories, clicking on the name of any category
 <img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
  
 ## Active Listings:
-The default route allows users t0 view all currently active listings displaying: __title__, description, current price, and photo (if one exists for the listing).
+The default route allows users to view all currently active listings displaying: `title`, `description`, `current price`, and `photo`. If the user clicks on a listing, it will diplay more information per that listing such as: `number of bids`, `last bid made`, and `number of watchers`.
 <img width="1117" alt="Screen Shot 2023-01-20 at 4 54 33 PM" src="https://user-images.githubusercontent.com/105305546/213812787-72420e92-872d-4304-8b12-a0c927e3b155.png">
 
 ## Watchlist:
