@@ -27,7 +27,7 @@
                 <small style="font-size:12px;">Auction created by: <strong>{{ listing.owner }}</strong></small>
                 {% if listing_in_watchlist %}
                 <!-- Remove button -->
-                    <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 185px; margin-bottom: 25px;">
+                    <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 165px; margin-bottom: 25px;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -35,7 +35,7 @@
                     </form> 
                 {% else %}
                 <!-- Add button -->
-                    <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 225px; margin-bottom: 25px;">
+                    <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 205px; margin-bottom: 25px;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
                         <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
@@ -53,29 +53,13 @@
             <!-- Bidding -->
             <div class="text-center my-4">
                 <h5 class="pt-2">
-
-                    <style>
-                        .error {
-                        padding: 10px;
-                        background-color: lightcoral;
-
-                            }
-                            .success {
-                                padding: 10px;
-                                background-color: lightgreen;
-
-                            }
-                    </style>
-                    
                     <div class="messages">
                     {% if messages %}
                     {% for message in messages %}
-                    <ul class="{{ message.tags }}"> {{ message }}</li>
+                    <ul class="alert {{ message.tags }}" role="alert"> {{ message }}</li>
                     {% endfor %}
                     {% endif %}
                     </div>
-
-                   
                     {% if listing.active %}Current Price:{% else %}Winning bid:{% endif %} <strong>${{ listing.current_price|intcomma }}</strong>
                     <p><small style="font-size:12px;">Last bid:</small>
                     <br><small style="font-size:12px;">{{ listing.bid_time|naturaltime }} </small>
@@ -131,7 +115,7 @@
                     <!-- Message for user not logged in -->
                     {% else %}
                         <p class="text-primary pt-1">
-                            <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> or Register to bid.</small>
+                            <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to bid.</small>
                         </p>
                     </div>
                     {% endif %}
@@ -188,7 +172,7 @@
                     </form>
                 </div>
                 {% else %}
-                <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> or Register to comment.</small></p>
+                <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to comment.</small></p>
                 {% endif %}
             </div>
             

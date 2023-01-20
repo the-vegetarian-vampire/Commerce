@@ -203,14 +203,3 @@ def close_auction(request, id):
         "update": True,
         "message": "Congratulations! Your auction has closed.",
          })
-
-def popular(request, id):
-    listing_id = Listing.objects.get(pk=id)
-    num_bids = Listing.objects.num_bids()
-    if num_bids >= 4:
-        return render(request, "auctions/listing.html", {
-        "listing": listing_id,
-         "message": "Popular!",
-        })
-    else: 
-        return None
