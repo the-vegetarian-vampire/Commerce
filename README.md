@@ -16,12 +16,15 @@ Users can create a new listing, specify a `title`, `description`, `price`, add a
 
 ## Categories:
 Users can choose from a list of categories, clicking on the name of any category takes the user to that page displaying all active listings per category.
+
 <img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
  
 ## Active Listings:
-The default route allows users to view all currently active listings displaying: `title`, `description`, `current price`, and `photo`. If the user clicks on a listing, it will diplay more information per that listing such as: `number of bids`, `last bid made`, and `number of watchers`.
+The default route allows users to view all currently active listings displaying: `title`, `description`, `current price`, and `photo`. If the user clicks on `Details` of a given listing, it will diplay more information per that listing such as: `number of bids`, `last bid made`, and `number of watchers`.
+
 <img width="1117" alt="Screen Shot 2023-01-20 at 4 54 33 PM" src="https://user-images.githubusercontent.com/105305546/213812787-72420e92-872d-4304-8b12-a0c927e3b155.png">
 
 ## Watchlist:
 Users can add listings to their Watchlist page, which displays all of the listings a user has added to their watchlist.
+
 <img width="1120" alt="Screen Shot 2023-01-20 at 4 55 13 PM" src="https://user-images.githubusercontent.com/105305546/213812584-2e7c7ad0-bb12-41a2-a83e-888300d6a790.png">
