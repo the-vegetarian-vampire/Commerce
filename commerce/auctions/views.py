@@ -13,11 +13,9 @@ from.forms import BidForm
 def index(request):
     listings = Listing.objects.filter(active=True)
     categories = Category.objects.all()
-    total_bids = Bid.objects.count()
     return render(request, "auctions/index.html", {
         "listings": listings,
         "categories": categories,
-        "total_bids": total_bids,
     })
 
 
@@ -105,13 +103,11 @@ def all_categories(request):
     if request.method == "POST":
         categoryform = request.POST['category']
         category = Category.objects.get(categoryName=categoryform)
-        total_bids = Bid.objects.count()
         listings = Listing.objects.filter(active=True, category=category)
         categories = Category.objects.all()
         return render(request, "auctions/index.html", {
             "listings": listings,
             "categories": categories,
-            "total_bids": total_bids,
         })
 
 def listing(request, id):
@@ -134,10 +130,8 @@ def listing(request, id):
 def watchlist(request):
     if request.method == "GET":
         categories = Category.objects.all()
-        total_bids = Bid.objects.count()
         return render(request, "auctions/watchlist.html", {
             "categories": categories,
-            "total_bids": total_bids,
             })
 
 def remove_watchlist(request, id):
@@ -155,10 +149,8 @@ def add_watchlist(request, id):
 def display_watchlist(request):
     c_user = request.user
     listings = c_user.list_watchlist.all() 
-    total_bids = Bid.objects.count()
     return render(request, "auctions/watchlist.html", {
         "listings": listings,
-        "total_bids": total_bids,
     })
 
 def categories(request):
@@ -191,41 +183,10 @@ def new_bid(request, id):
             if form.instance.bid > listing.current_price():
                 form.save()
                 messages.success(request, "Bid successful!")
-                return HttpResponseRedirect(reverse("listing",args=(id, )))
+                return HttpResponseRedirect(reverse("listing", args=(id,)))
             else: 
                 messages.error(request, "Bid failed")
-                return HttpResponseRedirect(reverse("listing",args=(id, )))
-
-"""
-def new_bid(request, id):
-    newbid = request.POST['newbid']
-    list_id = Listing.objects.get(pk=id)
-    listing_in_watchlist = request.user in list_id.watchlist.all()
-    all_comments = Comment.objects.filter(listing=list_id)
-    owner = request.user.username == list_id.owner.username
-    if float(newbid) > list_id.price:
-        higher_bid = Bid(user=request.user, bid=float(newbid))
-        higher_bid.save()
-        list_id.price = higher_bid
-        list_id.save()
-        return render(request, "auctions/listing.html", {
-            "listing": list_id,
-            "listing_in_watchlist": listing_in_watchlist,
-            "all_comments": all_comments,
-            "owner": owner,
-            "message": "Bid successful!",
-            "update": True
-            })
-    else:
-         return render(request, "auctions/listing.html", {
-            "listing": list_id,
-            "listing_in_watchlist": listing_in_watchlist,
-            "all_comments": all_comments,
-            "owner": owner,
-            "message": "Bid failed",
-            "update": False
-            })
-"""
+                return HttpResponseRedirect(reverse("listing", args=(id,)))
 
 def close_auction(request, id):
     listing_id = Listing.objects.get(pk=id)
@@ -242,3 +203,14 @@ def close_auction(request, id):
         "update": True,
         "message": "Congratulations! Your auction has closed.",
          })
+
+def popular(request, id):
+    listing_id = Listing.objects.get(pk=id)
+    num_bids = Listing.objects.num_bids()
+    if num_bids >= 4:
+        return render(request, "auctions/listing.html", {
+        "listing": listing_id,
+         "message": "Popular!",
+        })
+    else: 
+        return None

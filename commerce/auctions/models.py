@@ -20,7 +20,6 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=280)
     price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
-    bid_count = models.IntegerField(default=0)
     imageURL = models.CharField(max_length=1000)
     active = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null = True, related_name="user")
@@ -40,6 +39,18 @@ class Listing(models.Model):
             return round(self.bids.aggregate(Max('bid'))['bid__max'],2)
         else: 
             return self.price
+    
+    def bid_time(self):
+        try:
+            return self.bids.order_by('-time').first().time
+        except: 
+            pass
+
+    def bid_winner(self):
+        if self.num_bids() > 0: 
+            return self.bids.get(bid=self.current_price()).user
+        else: 
+            return None
 
 class Bid(models.Model):
     bid = models.DecimalField(default=0, max_digits=8, decimal_places=2)
@@ -49,6 +60,10 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"{self.user} bid {self.bid} on {self.listing}"
+
+    class Meta: 
+        # Orders bids by time
+        ordering = ['-time']
 
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=True, related_name="listing_comment")

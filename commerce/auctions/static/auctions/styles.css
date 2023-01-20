@@ -39,3 +39,15 @@ body {
 
 } 
 */
+
+.error {
+    padding: 10px;
+    background-color: lightcoral;
+
+}
+
+.success {
+    padding: 10px;
+    background-color: lightgreen;
+
+}

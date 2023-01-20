@@ -19,7 +19,7 @@
           <div class="card-body border-top">
             <h5 class="card-title text-truncate">{{ listing.title }}</h5>
             <p class="card-text text-truncate" style="justify-content: left;"><small>"{{ listing.description }}"</small></p>
-            <p><strong>${{ listing.price|intcomma }}</strong>
+            <p><strong>${{ listing.current_price|intcomma }}</strong>
               <br>{{ listing.num_bids }} bid(s)</br>
             </p>
               <div class="justify-content-center"></div>

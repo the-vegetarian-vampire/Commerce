@@ -13,11 +13,10 @@
 <div class="container-lg pt-2 pb-3">
     <!-- Image -->
     <div class="row mt-2 align-items-center">
-        
-        <!-- Image -->
-        <div class="col-md-6 col-12 d-flex">
-            <img style="max-height: 450px;" class="img-fluid mx-auto" src="{{ listing.imageURL }}">
-        </div>
+    <div class="col-md-6 col-12 d-flex">
+        <img style="max-height: 450px;" class="img-fluid mx-auto" src="{% if listing.imageURL %}{{ listing.imageURL }}{% else %}http://www.aaru.edu.jo/websites/aaru2/wp-content/plugins/learnpress/assets/images/no-image.png?Mobile=1&Source=%2F%5Flayouts%2Fmobile%2Fdispform%2Easpx%3FList%3D78b536db%252De7c7%252D45d9%252Da661%252Ddb2a2aa2fbaf%26View%3D6efc759a%252D0646%252D433c%252Dab6e%252D2f027ffe0799%26RootFolder%3D%252Fwebsites%252Faaru2%252Fwp%252Dcontent%252Fplugins%252Flearnpress%252Fassets%252Fimages%26ID%3D4786%26CurrentPage%3D1{% endif %}" alt="Photo of {{ listing.title }}">  
+
+    </div>
 
         <!-- Listing info -->
         <div class="col-md-6 col-12 border align-self-center pt-4 px-4">
@@ -26,7 +25,6 @@
             {% if user.is_authenticated %}
             <div>
                 <small style="font-size:12px;">Auction created by: <strong>{{ listing.owner }}</strong></small>
-
                 {% if listing_in_watchlist %}
                 <!-- Remove button -->
                     <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 185px; margin-bottom: 25px;">
@@ -38,11 +36,11 @@
                 {% else %}
                 <!-- Add button -->
                     <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 225px; margin-bottom: 25px;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
-                            <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
-                        </svg> Add to Watchlist </button>
-                        {% endif %}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
+                        <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
+                    </svg> Add to Watchlist </button>
+                {% endif %}
                     </form>
             </div>
             {% endif %}
@@ -52,35 +50,41 @@
             <p class="text-center"><small>"{{ listing.description }}"</small> 
             <br><span class="badge badge-info">Watchers: {{ all_watchers }}</span></p>
             
-            
-            <!-- Bid -->
+            <!-- Bidding -->
             <div class="text-center my-4">
                 <h5 class="pt-2">
-                    {% if message %}
-                    {% if update %}
-                    <div class="alert alert-success" role="alert">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
-                            <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
-                            <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-                          </svg>
-                        {{ message }}
-                    </div>
-                    {% else %}
-                    <div class="alert alert-danger" role="alert">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down" viewBox="0 0 16 16">
-                            <path d="M8.864 15.674c-.956.24-1.843-.484-1.908-1.42-.072-1.05-.23-2.015-.428-2.59-.125-.36-.479-1.012-1.04-1.638-.557-.624-1.282-1.179-2.131-1.41C2.685 8.432 2 7.85 2 7V3c0-.845.682-1.464 1.448-1.546 1.07-.113 1.564-.415 2.068-.723l.048-.029c.272-.166.578-.349.97-.484C6.931.08 7.395 0 8 0h3.5c.937 0 1.599.478 1.934 1.064.164.287.254.607.254.913 0 .152-.023.312-.077.464.201.262.38.577.488.9.11.33.172.762.004 1.15.069.13.12.268.159.403.077.27.113.567.113.856 0 .289-.036.586-.113.856-.035.12-.08.244-.138.363.394.571.418 1.2.234 1.733-.206.592-.682 1.1-1.2 1.272-.847.283-1.803.276-2.516.211a9.877 9.877 0 0 1-.443-.05 9.364 9.364 0 0 1-.062 4.51c-.138.508-.55.848-1.012.964l-.261.065zM11.5 1H8c-.51 0-.863.068-1.14.163-.281.097-.506.229-.776.393l-.04.025c-.555.338-1.198.73-2.49.868-.333.035-.554.29-.554.55V7c0 .255.226.543.62.65 1.095.3 1.977.997 2.614 1.709.635.71 1.064 1.475 1.238 1.977.243.7.407 1.768.482 2.85.025.362.36.595.667.518l.262-.065c.16-.04.258-.144.288-.255a8.34 8.34 0 0 0-.145-4.726.5.5 0 0 1 .595-.643h.003l.014.004.058.013a8.912 8.912 0 0 0 1.036.157c.663.06 1.457.054 2.11-.163.175-.059.45-.301.57-.651.107-.308.087-.67-.266-1.021L12.793 7l.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315l-.353-.354.353-.354c.047-.047.109-.176.005-.488a2.224 2.224 0 0 0-.505-.804l-.353-.354.353-.354c.006-.005.041-.05.041-.17a.866.866 0 0 0-.121-.415C12.4 1.272 12.063 1 11.5 1z"/>
-                          </svg>
-                        {{ message}}
-                    </div>
+
+                    <style>
+                        .error {
+                        padding: 10px;
+                        background-color: lightcoral;
+
+                            }
+                            .success {
+                                padding: 10px;
+                                background-color: lightgreen;
+
+                            }
+                    </style>
+                    
+                    <div class="messages">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <ul class="{{ message.tags }}"> {{ message }}</li>
+                    {% endfor %}
                     {% endif %}
-                    {% endif %}  Current Price: <strong>${{ listing.price|intcomma }}</strong>
+                    </div>
+
+                   
+                    {% if listing.active %}Current Price:{% else %}Winning bid:{% endif %} <strong>${{ listing.current_price|intcomma }}</strong>
                     <p><small style="font-size:12px;">Last bid:</small>
-                    <br><small style="font-size:12px;">{{ bid.time|naturaltime }} </small>
+                    <br><small style="font-size:12px;">{{ listing.bid_time|naturaltime }} </small>
                     </p>
+                    
                 </h5> 
                 {% if listing.active %}
                 <!-- All bids -->
-                <span class="badge badge-warning">{{ listing.num_bids }} total bid(s).</span>
+                <span class="badge badge-warning">{{ listing.num_bids }} total bid(s). {% if popular %}{{ message }} {% endif %}</span>
                 
                 {% endif %}
 

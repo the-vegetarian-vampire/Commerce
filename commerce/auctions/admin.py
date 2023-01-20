@@ -3,7 +3,7 @@ from .models import Listing, User, Category, Bid, Comment
 
 # Register your models here.
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ("id", "owner", "title", "price", "time", "bid_count")
+    list_display = ("id", "owner", "title", "price", "time")
 
 class BidAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "bid", "listing", "time")
