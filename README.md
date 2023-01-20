@@ -4,7 +4,7 @@ Project 2 for Harvard's CS50w Web Programming with Python and JavaScript.
 Youtube:
 
 ### Overview:
-An eBay-like e-commerce auction site which allows users to post listings, place bids, comment, and add listings to a watchlist.
+An e-commerce auction site which allows users to post listings, place bids, comment, and add listings to a watchlist.
 
 ### Specifications:
 Built with `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`.
