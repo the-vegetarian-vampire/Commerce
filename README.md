@@ -3,10 +3,15 @@ Harvard's Web Programming with Python and JavaScript:
 
 Youtube:
 
-<img width="1143" alt="Screen Shot 2023-01-18 at 8 39 56 PM" src="https://user-images.githubusercontent.com/105305546/213335561-21cc7b4e-c5cc-467a-9dd5-d327e8fec441.png">
+New Listing:
+<img width="1120" alt="Screen Shot 2023-01-20 at 4 54 58 PM" src="https://user-images.githubusercontent.com/105305546/213812463-0502deb1-86f2-4c17-bf80-b160ee7efec0.png">
 
-<img width="1143" alt="Screen Shot 2023-01-18 at 8 30 59 PM" src="https://user-images.githubusercontent.com/105305546/213335368-374b7515-153b-401d-89ff-8abfed12c656.png">
+Categories:
+<img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
+ 
+Active Listings:
+<img width="1117" alt="Screen Shot 2023-01-20 at 4 54 33 PM" src="https://user-images.githubusercontent.com/105305546/213812558-b80a8f8d-c5f6-43dc-94f9-9c72a5e0d80b.png">
 
-<img width="1142" alt="Screen Shot 2023-01-18 at 8 32 31 PM" src="https://user-images.githubusercontent.com/105305546/213335391-d5599d3c-d759-4be3-9635-854635751387.png">
+Watchlist:
+<img width="1120" alt="Screen Shot 2023-01-20 at 4 55 13 PM" src="https://user-images.githubusercontent.com/105305546/213812584-2e7c7ad0-bb12-41a2-a83e-888300d6a790.png">
 
-<img width="493" alt="Screen Shot 2023-01-18 at 8 31 36 PM" src="https://user-images.githubusercontent.com/105305546/213335405-ad15c22e-98e7-431f-b79e-65876c6bf790.png">
