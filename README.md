@@ -1,7 +1,8 @@
-## CS50w's - Project 2 - Commerce
-Harvard's Web Programming with Python and JavaScript:
+## Commerce
+Project 2 for Harvard's CS50w Web Programming with Python and JavaScript:
 
-An eBay-like e-commerce auction site which allows users to post auction listings, place bids, comment, and add listings to a watchlist.
+#### Overview 
+An eBay-like e-commerce auction site which allows users to post listings, place bids, comment, and add listings to a watchlist.
 
 Youtube:
 
