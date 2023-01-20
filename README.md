@@ -4,7 +4,7 @@ Harvard's Web Programming with Python and JavaScript:
 Youtube:
 
 New Listing:
-<img width="1120" alt="Screen Shot 2023-01-20 at 4 54 58 PM" src="https://user-images.githubusercontent.com/105305546/213812463-0502deb1-86f2-4c17-bf80-b160ee7efec0.png">
+<img width="1115" alt="Screen Shot 2023-01-20 at 4 54 58 PM" src="https://user-images.githubusercontent.com/105305546/213812951-e75f8063-9b75-4095-b8de-96515bc4d2de.png">
 
 Categories:
 <img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
