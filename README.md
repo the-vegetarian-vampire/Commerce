@@ -20,7 +20,7 @@ Users can choose from a list of `alphabatized` categories: `Art`, `Books`, `Clot
 <img width="1136" alt="Screen Shot 2023-01-20 at 4 54 04 PM" src="https://user-images.githubusercontent.com/105305546/213812479-10a6ce92-8f41-4161-905f-ebfd73317b0e.png">
  
 ## Active Listings:
-The default route allows users to view all currently active listings displaying: `title`, `description`, `current price`, and `photo`. If the user clicks on `Details` of a given listing, it will diplay more information per that listing such as: `number of bids`, `last bid made`,`number of watchers`, `comments`, and `number of comments`.
+The default route allows users to view all current active listings displaying: `title`, `description`, `current price`, and `photo`. If the user clicks on `Details` of a given listing, it will diplay more information per that listing such as: `number of bids`, `last bid made`,`number of watchers`, `comments`, and `number of comments`.
 
 <img width="1117" alt="Screen Shot 2023-01-20 at 4 54 33 PM" src="https://user-images.githubusercontent.com/105305546/213812787-72420e92-872d-4304-8b12-a0c927e3b155.png">
 
@@ -34,3 +34,5 @@ Using `Django Admin` and `SQLite3` as the backend, the Python models are rendere
 
 <img width="1216" alt="Screen Shot 2023-01-20 at 5 51 41 PM" src="https://user-images.githubusercontent.com/105305546/213819568-4f5410cd-9a4d-4dc1-b6fb-18707ca38ac8.png">
 
+
+But seriously, WHO STOLE BOY WITH 🍏?
