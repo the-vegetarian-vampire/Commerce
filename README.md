@@ -30,12 +30,12 @@ Users can add listings to their Watchlist page, which displays all of the listin
 <img width="1120" alt="Screen Shot 2023-01-20 at 4 55 13 PM" src="https://user-images.githubusercontent.com/105305546/213812584-2e7c7ad0-bb12-41a2-a83e-888300d6a790.png">
 
 ## Close Auction:
-Users can close an auction, the winning bid price is displayed, and when the user who won the auction logs in, they will be notified they won the auction.
+If the user is the owner of the auction, they can close the auction, the winning bid price is displayed, and the user who won the auction will be notified they won the auction.
 
 <img width="1073" alt="Screen Shot 2023-01-22 at 11 32 20 AM" src="https://user-images.githubusercontent.com/105305546/213927383-98e1fe90-3668-4b5b-aadb-76af06fa07ac.png">
 
 ## Closed Listings:
-Closed listings showcases as such displaying the winner of each auction and the details therein.
+Closed listings showcases the winner of each closed auction and the details therein.
 
 <img width="1018" alt="Screen Shot 2023-01-22 at 12 14 09 PM" src="https://user-images.githubusercontent.com/105305546/213929930-bf1f604b-ea6f-483e-8e5a-b04d1d8fe923.png">
 
