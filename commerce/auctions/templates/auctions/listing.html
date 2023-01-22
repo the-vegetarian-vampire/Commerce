@@ -67,13 +67,16 @@
                 <ul class="alert {{ message.tags }}" role="alert"> {{ message }}</li>
                 {% endfor %}
                 {% endif %}
-                </div>
+                <!-- If not active, show winner -->
+                {% if listing.bid_winner == user and listing.active == False %}
+                <ul class="alert alert-success text-center" role="alert"><strong>Congratulations!</strong> You won the auction!</li>
+                {% endif %}
+            </h5> 
                 <!-- Active price or Winning bid price-->
-                {% if listing.active %}Current Price:{% else %}Winning bid:{% endif %} <strong>${{ listing.current_price|intcomma }}</strong>
+                <h5>{% if listing.active %}Current Price:{% else %}Winning bid:{% endif %} <strong>${{ listing.current_price|intcomma }}</strong></h5>
                 <p><small style="font-size:12px;">Last bid:</small>
                 <br><small style="font-size:12px;">{{ listing.bid_time|naturaltime }} </small>
                 </p>
-            </h5> 
             <!-- Total number of bids -->
             <span class="badge badge-warning">{{ listing.num_bids }} total bid(s).</span>
             
@@ -86,12 +89,12 @@
             {% csrf_token %}
             <!-- Can't bid on own listing -->
             {% if not owner %}
-                    {% for field in form %}
-                    <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">$</div>
-                    {{ field }}
-                    {% endfor %}
+            {% for field in form %}
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+            {{ field }}
+            {% endfor %}
                     </div>
                     </div>
                 </div>
@@ -112,13 +115,6 @@
             </p>
             </div>
             {% endif %}
-
-<!-- If not active, show winner -->
-{% if listing.bid_winner == user and listing.active == False %}
-<div class="text-center">
-    <span class="alert alert-success text-center" role="alert">Congratulations! You won the auction!</span>
-</div>
-{% endif %}
 </div>
 </div>
 </div>

@@ -198,31 +198,28 @@ def close_auction(request, id):
     all_comments = Comment.objects.filter(listing=listing)
     total_comments = all_comments.count()
     owner = request.user.username == listing.owner.username
-    messages.success(request, "Congratulations! Your auction has closed.")
-    return render(request, "auctions/listing.html", {
+    if owner:
+        messages.success(request, "Congratulations! Your auction has closed.")
+        return render(request, "auctions/listing.html", {
         "listing": listing,
         "listing_in_watchlist": listing_in_watchlist,
         "all_watchers": all_watchers,
         "all_comments": all_comments,
         "total_comments": total_comments,
         "owner": owner,
-        "message": "Congratulations! Your auction has closed."
-         })
-
-def closed_listings(request, id):
-    listing = Listing.objects.get(pk=id)
+        })
+    else:
+     return render(request, "auctions/listing.html", {
+        "listing": listing,
+        "listing_in_watchlist": listing_in_watchlist,
+        "all_watchers": all_watchers,
+        "all_comments": all_comments,
+        "total_comments": total_comments,
+        "owner": owner,
+        })
+         
+def closed_listings(request):
     closed_listing = Listing.objects.filter(active=False)
-    listing_in_watchlist = request.user in listing.watchlist.all()
-    all_watchers = listing.watchlist.all().count()
-    all_comments = Comment.objects.filter(listing=listing)
-    total_comments = all_comments.count()
-    owner = request.user.username == listing.owner.username
     return render(request, "auctions/closed_listings.html", {
-        "listing": listing,
         "closed_listing": closed_listing,
-        "listing_in_watchlist": listing_in_watchlist,
-        "all_watchers": all_watchers,
-        "all_comments": all_comments,
-        "total_comments": total_comments,
-        "owner": owner,
         })
