@@ -32,8 +32,7 @@ Users can add listings to their Watchlist page, which displays all of the listin
 ## Close Auction:
 Users can close an auction, the winning bid price is displayed, and when the user who won the auction logs in, they will be notified they won the auction.
 
-<img width="1073" alt="Screen Shot 2023-01-22 at 1 50 41 AM" src="https://user-images.githubusercontent.com/105305546/213904369-fa33fb32-7075-4257-bfd7-87536eaa3e09.png">
-
+<img width="1073" alt="Screen Shot 2023-01-22 at 11 32 20 AM" src="https://user-images.githubusercontent.com/105305546/213927383-98e1fe90-3668-4b5b-aadb-76af06fa07ac.png">
 
 ## Models:
 Using `Django Admin` and `SQLite3` as the backend, the Python models are rendered to the Django framework `alphabetically` as `Bids`, `Categorys`, `Comments`, `Listings`, `Users`.
