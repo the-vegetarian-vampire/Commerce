@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{% if listing.active == False %}
+{% if listing.active == False and not owner %}
     <div class="alert alert-success text-center" role="alert">
         The auction has ended.
     </div>
@@ -17,17 +17,15 @@
         <img style="max-height: 450px;" class="img-fluid mx-auto" src="{% if listing.imageURL %}{{ listing.imageURL }}{% else %}http://www.aaru.edu.jo/websites/aaru2/wp-content/plugins/learnpress/assets/images/no-image.png?Mobile=1&Source=%2F%5Flayouts%2Fmobile%2Fdispform%2Easpx%3FList%3D78b536db%252De7c7%252D45d9%252Da661%252Ddb2a2aa2fbaf%26View%3D6efc759a%252D0646%252D433c%252Dab6e%252D2f027ffe0799%26RootFolder%3D%252Fwebsites%252Faaru2%252Fwp%252Dcontent%252Fplugins%252Flearnpress%252Fassets%252Fimages%26ID%3D4786%26CurrentPage%3D1{% endif %}" alt="Photo of {{ listing.title }}">  
 
     </div>
-
         <!-- Listing info -->
         <div class="col-md-6 col-12 border align-self-center pt-4 px-4">
-
             <!-- Watchlist Buttons -->
             {% if user.is_authenticated %}
             <div>
                 <small style="font-size:12px;">Auction created by: <strong>{{ listing.owner }}</strong></small>
                 {% if listing_in_watchlist %}
                 <!-- Remove button -->
-                    <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 165px; margin-bottom: 25px;">
+                    <form action="{% url 'remove_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="float: right;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-minus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -35,7 +33,7 @@
                     </form> 
                 {% else %}
                 <!-- Add button -->
-                    <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="padding-left: 205px; margin-bottom: 25px;">
+                    <form action="{% url 'add_watchlist' id=listing.id %}" method="POST" class="d-inline-block" style="float: right;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
                         <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
@@ -44,12 +42,11 @@
                     </form>
             </div>
             {% endif %}
-
             <!-- Listing information -->
+            <br>
             <h2 class="text-center">{{ listing.title }}</h2>
             <p class="text-center"><small>"{{ listing.description }}"</small> 
             <br><span class="badge badge-info">Watchers: {{ all_watchers }}</span></p>
-            
             <!-- Bidding -->
             <div class="text-center my-4">
                 <h5 class="pt-2">
@@ -64,14 +61,11 @@
                     <p><small style="font-size:12px;">Last bid:</small>
                     <br><small style="font-size:12px;">{{ listing.bid_time|naturaltime }} </small>
                     </p>
-                    
                 </h5> 
                 {% if listing.active %}
                 <!-- All bids -->
-                <span class="badge badge-warning">{{ listing.num_bids }} total bid(s). {% if popular %}{{ message }} {% endif %}</span>
-                
+                <span class="badge badge-warning">{{ listing.num_bids }} total bid(s).</span>
                 {% endif %}
-
                 <!-- Bid form -->
                 {% if user.is_authenticated and listing.active %}
                 <div class="pt-2">
@@ -96,85 +90,78 @@
                     <input class="btn btn-primary btn-sm ml-2" type="submit" value="Place bid">
                 </form>
                 {% endif %}
-
-                                <!-- Close auction button-->
-                                {% if user.is_authenticated and owner %}
-                                <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block" style="margin-left: 205px; margin-bottom: 20px;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger btn-sm ml-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                      </svg> Close Auction</button>
-                                </form>
-                                {% endif %}
-                            </div>
-                        </div>
-                            </div>
-                            </div>
-                        
-
-                    <!-- Message for user not logged in -->
-                    {% else %}
-                        <p class="text-primary pt-1">
-                            <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to bid.</small>
-                        </p>
-                    </div>
-                    {% endif %}
-
-                <!-- If not active, show winner -->
-                    {% if listing.current_winner == user %}
-                        <span class="badge badge-secondary badge-success">You won the auction!</span>
-                    {% endif %}
-
             </div>
         </div>
     </div>
-    
+</div>
+<!-- Message for user not logged in -->
+{% else %}
+<p class="text-primary pt-1">
+    <small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to bid.</small>
+</p>
+</div>
+{% endif %}
+<!-- If not active, show winner -->
+{% if listing.bid_winner == user and listing.active == False %}
+<div class="text-center">
+    <span class="badge badge-secondary badge-success">Congratulations! You won the auction!</span>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
 </div>
 <!--Comments Container-->
 <div class="container">
-
     <!--Comments badge and counter-->
     <span class="badge badge-secondary" style="margin-bottom: 10px;"> 
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
-        <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
-        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+            <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+            <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
         </svg> Comments: {{ total_comments }}</span>
-
-         <!--Author and time-->
-          {% for comment in all_comments %}
-            <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
-                <div class="col-6"><strong>{{ comment.author }}</strong> commented:</div>
-                <div class="col-6 text-right text-muted"><small>{{ comment.time|naturaltime }} </small></div>
-
-                <!--Author Comments-->
-                    <div class="col-xl-12 pt-1" style="margin-bottom: 15px; margin-top: 10px;">
-                    {{ comment.message }}
-                    </div>
+        <!--Author and time-->
+        {% for comment in all_comments %}
+        <div class="row border bg-light py-2 mx-0 mx-md-3 mb-3">
+            <div class="col-6"><strong>{{ comment.author }}</strong> commented:</div>
+            <div class="col-6 text-right text-muted"><small>{{ comment.time|naturaltime }} </small></div>
+            
+            <!--Author Comments-->
+            <div class="col-xl-12 pt-1" style="margin-bottom: 15px; margin-top: 10px;">
+                {{ comment.message }}
             </div>
-
-            {% empty %}
-            <div style="margin-bottom: 25px;">
+        </div>
+        {% empty %}
+        <div style="margin-bottom: 25px;">
             <br>
             <small>No comments for listing.</small>
-            </div>
-            {% endfor %}
-
-            <!--Comment Form-->
-            <div class="justify-content-center align-items-center">
-                <div class="col col-lg-14 mx-3 mx-sm-0">
+        </div>
+        {% endfor %}
+        <!--Comments-->
+        <div class="justify-content-center align-items-center">
+            <div class="col col-lg-14 mx-3 mx-sm-0">
                 <h6>Comment as <strong>{{ user.username }}</strong>:</h6>
                 {% if user.is_authenticated %}
-                    <form action="{% url 'add_comment' id=listing.id %}" method="POST">
+                <form action="{% url 'add_comment' id=listing.id %}" method="POST">
                     {% csrf_token %}
                     <textarea class="form-group col-md-12" rows="3" type="text" name="new_comment" maxlength="2000" placeholder="What are your thoughts?"></textarea>
                     <div class="form-group text-right mb-2"></div>
-                        <input value="Add comment" class="btn btn-primary btn-sm" type="submit">
-                    </form>
-                </div>
-                {% else %}
-                <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to comment.</small></p>
-                {% endif %}
+                    <input value="Add comment" class="btn btn-primary btn-sm" type="submit">
+                </form>
             </div>
-            
-</div>
-{% endblock %}
+            {% else %}
+            <p class="text-primary"><small><strong><a href="{% url 'login' %}" class="text-primary">Sign in</a></strong> to comment.</small></p>
+            {% endif %}
+        </div>
+        
+    </div>
+    <!-- Close auction button-->
+    {% if user.is_authenticated and owner and listing.active %}
+    <form action="{% url 'close_auction' id=listing.id %}" method="POST" class="d-inline-block" style="margin-left: 205px; margin-bottom: 20px;">
+        {% csrf_token %}
+        <button type="submit" value="close_auction" name="close_auction" class="btn btn-danger btn-sm ml-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg> Close Auction</button>
+    </form>
+    {% endif %} 
+    {% endblock %}
+    

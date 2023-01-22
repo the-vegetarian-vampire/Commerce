@@ -1,3 +1,4 @@
+from contextlib import _RedirectStream
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -17,7 +18,6 @@ def index(request):
         "listings": listings,
         "categories": categories,
     })
-
 
 def login_view(request):
     if request.method == "POST":
@@ -182,24 +182,26 @@ def new_bid(request, id):
             form.instance.listing = listing
             if form.instance.bid > listing.current_price():
                 form.save()
+                listing.save()
                 messages.success(request, "Bid successful!")
                 return HttpResponseRedirect(reverse("listing", args=(id,)))
             else: 
                 messages.error(request, "Bid failed")
                 return HttpResponseRedirect(reverse("listing", args=(id,)))
+       
 
 def close_auction(request, id):
-    listing_id = Listing.objects.get(pk=id)
-    listing_id.active = False
-    listing_id.save()
-    listing_in_watchlist = request.user in listing_id.watchlist.all()
-    all_comments = Comment.objects.filter(listing=listing_id)
-    owner = request.user.username == listing_id.owner.username
-    return render(request, "auctions/closed_listings.html", {
-        "listing": listing_id,
+    listing = Listing.objects.get(pk=id)
+    # listing.active = False
+    listing.save()
+    listing_in_watchlist = request.user in listing.watchlist.all()
+    all_comments = Comment.objects.filter(listing=listing)
+    owner = request.user.username == listing.owner.username
+    messages.success(request, "Congratulations! Your auction has closed.")
+    return render(request, "auctions/listing.html", {
+        "listing": listing,
         "listing_in_watchlist": listing_in_watchlist,
         "all_comments": all_comments,
         "owner": owner,
-        "update": True,
         "message": "Congratulations! Your auction has closed.",
          })
