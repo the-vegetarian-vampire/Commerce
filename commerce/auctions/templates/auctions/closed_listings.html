@@ -7,10 +7,13 @@
   <h2 class="title text-center" style="padding-top: 20px; padding-bottom: 10px;">Closed Auctions</h2>
   <div class="border-bottom" style="margin-bottom: 10px;"></div>
 
+{% for listing in listings %}
+{% if listing.active == False %}
 
-    <div>{{  }}</div>
+<div>{{ listing.title }}</div>
+<div>Winner: {{ listing.bid_winner}} </div>
 
-
+{% endif %}
 {% empty %}
 <div class="title text-center">
     <br>
