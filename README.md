@@ -30,7 +30,7 @@ Users can add listings to their Watchlist page, which displays all of the listin
 <img width="1120" alt="Screen Shot 2023-01-20 at 4 55 13 PM" src="https://user-images.githubusercontent.com/105305546/213812584-2e7c7ad0-bb12-41a2-a83e-888300d6a790.png">
 
 ## Close Auction:
-Users can close an auction, the winning price is displaye, and when the user who won the auction logs back in, they will be notified they won said auction.
+Users can close an auction, the winning bid price is displayed, and when the user who won the auction logs in, they will be notified they won the auction.
 
 <img width="1073" alt="Screen Shot 2023-01-22 at 1 50 41 AM" src="https://user-images.githubusercontent.com/105305546/213904369-fa33fb32-7075-4257-bfd7-87536eaa3e09.png">
 
@@ -41,4 +41,4 @@ Using `Django Admin` and `SQLite3` as the backend, the Python models are rendere
 <img width="1216" alt="Screen Shot 2023-01-20 at 5 51 41 PM" src="https://user-images.githubusercontent.com/105305546/213819568-4f5410cd-9a4d-4dc1-b6fb-18707ca38ac8.png">
 
 
-But seriously, WHO STOLE BOY WITH 🍏?
+But seriously whole stole... BOY WITH APPlE 🍏?
