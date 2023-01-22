@@ -34,6 +34,11 @@ Users can close an auction, the winning bid price is displayed, and when the use
 
 <img width="1073" alt="Screen Shot 2023-01-22 at 11 32 20 AM" src="https://user-images.githubusercontent.com/105305546/213927383-98e1fe90-3668-4b5b-aadb-76af06fa07ac.png">
 
+## Closed Listings:
+Closed listings showcases as such displaying the winner of each auction and the details therein.
+
+<img width="1018" alt="Screen Shot 2023-01-22 at 12 14 09 PM" src="https://user-images.githubusercontent.com/105305546/213929930-bf1f604b-ea6f-483e-8e5a-b04d1d8fe923.png">
+
 ## Models:
 Using `Django Admin` and `SQLite3` as the backend, the Python models are rendered to the Django framework `alphabetically` as `Bids`, `Categorys`, `Comments`, `Listings`, `Users`.
 
