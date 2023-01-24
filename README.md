@@ -1,7 +1,7 @@
 ## Commerce
 Project 2 for Harvard's CS50w Web Programming with Python and JavaScript.
 
-📹 `Youtube:`
+📹 `Youtube:` https://www.youtube.com/watch?v=Qnhv8x9NEZI
 
 ### Overview:
 An e-commerce auction site which allows users to post listings, place bids, comment, and add listings to a watchlist.
