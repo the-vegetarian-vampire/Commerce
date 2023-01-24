@@ -10,7 +10,7 @@ An e-commerce auction site which allows users to post listings, place bids, comm
 Built with `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`.
 
 ## New Listing: 
-Users can create a new listing, specify a `title`, `description`, `price`, an `imageURL`, and a `category`.
+Users can create a new listing, specify a `title`, `description`, `price`, `imageURL`, and `category`.
 
 <img width="1115" alt="Screen Shot 2023-01-20 at 4 54 58 PM" src="https://user-images.githubusercontent.com/105305546/213812951-e75f8063-9b75-4095-b8de-96515bc4d2de.png">
 
