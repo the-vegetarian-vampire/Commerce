@@ -47,4 +47,4 @@ Using `Django Admin` and `SQLite3` as the backend, the Python models are rendere
 <img width="1216" alt="Screen Shot 2023-01-20 at 5 51 41 PM" src="https://user-images.githubusercontent.com/105305546/213819568-4f5410cd-9a4d-4dc1-b6fb-18707ca38ac8.png">
 
 
-But seriously whole stole... [BOY WITH APPlE 🍏](https://www.youtube.com/watch?v=dGH8ZbD6U2o)?
+But seriously whole stole... [BOY WITH APPLE 🍏](https://www.youtube.com/watch?v=dGH8ZbD6U2o)?
