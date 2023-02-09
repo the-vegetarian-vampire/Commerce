@@ -9,6 +9,8 @@ An e-commerce auction site which allows users to post listings, place bids, comm
 ### Specifications:
 Built with `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`.
 
+The site also makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contrib/humanize/) humanize template filters, `intcomma` and `naturaltime`.
+
 ## New Listing: 
 Users can create a new listing, specify a `title`, `description`, `price`, `imageURL`, and `category`.
 
@@ -39,10 +41,10 @@ Closed listings showcases the winner of each closed auction and the details ther
 
 <img width="1018" alt="Screen Shot 2023-01-22 at 12 14 09 PM" src="https://user-images.githubusercontent.com/105305546/213929930-bf1f604b-ea6f-483e-8e5a-b04d1d8fe923.png">
 
-## Models:
+## Data Models:
 Using `Django Admin` and `SQLite3` as the backend, the Python models are rendered to the Django framework `alphabetically` as `Bids`, `Categorys`, `Comments`, `Listings`, `Users`.
 
 <img width="1216" alt="Screen Shot 2023-01-20 at 5 51 41 PM" src="https://user-images.githubusercontent.com/105305546/213819568-4f5410cd-9a4d-4dc1-b6fb-18707ca38ac8.png">
 
 
-But seriously whole stole... BOY WITH APPlE 🍏?
+But seriously whole stole... [BOY WITH APPlE 🍏](https://www.youtube.com/watch?v=dGH8ZbD6U2o)?
