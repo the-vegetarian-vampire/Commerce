@@ -11,6 +11,15 @@ Built with `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`.
 
 The site also makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contrib/humanize/) humanize template filters, `intcomma` and `naturaltime`.
 
+### To Run:
+1. Pip install `Django`
+2. In the terminal, cd into the commerce directory.
+3. Run `python3 manage.py makemigrations commerce` to make migrations for the commerce app.
+4. Run `python3 manage.py migrate` to apply migrations to the database.
+5. Run `python3 manage.py runserver` to start the Django web server and visit the website in the browser.
+
+-----
+
 ## New Listing: 
 Users can create a new listing, specify a `title`, `description`, `price`, `imageURL`, and `category`.
 
